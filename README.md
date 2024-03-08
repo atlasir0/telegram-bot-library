@@ -1,2 +1,2 @@
 # telegram-bot-library-
-library for creating bot telegrams
+implementation of a library for creating bot telegrams
