@@ -13,7 +13,7 @@ import (
 
 const (
 	BotToken   = "7145361114:AAGcDmLWHv9eyeQTjcj1djRA1oDcCJBmuKg"
-	WebhookURL = "https://1fc6-178-207-154-253.ngrok-free.app"
+	WebhookURL = "https://5048-178-207-154-253.ngrok-free.app"
 )
 
 var (
@@ -108,9 +108,6 @@ func main() {
 	}{
 		{"/add", "ins '/add hello:Hi there!'"},
 		{"/cat", "https://s3.amazonaws.com/freecodecamp/running-cats.jpg"},
-		{"/egor", "chert"},
-		{"/рыжий", "https://upload.wikimedia.org/wikipedia/commons/1/11/%C4%8Cert_odn%C3%A1%C5%A1%C3%AD_Metternicha.jpg \n"},
-		{"/wtf", "https://upload.wikimedia.org/wikipedia/commons/1/11/%C4%8Cert_odn%C3%A1%C5%A1%C3%AD_Metternicha.jpg \n"},
 		{"/g", "seg"},
 	}
 
