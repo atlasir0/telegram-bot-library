@@ -3,17 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
-	"sync"
-
 	"net/http"
 	"strings"
+	"sync"
 
 	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 const (
 	BotToken   = "7145361114:AAGcDmLWHv9eyeQTjcj1djRA1oDcCJBmuKg"
-	WebhookURL = "https://5048-178-207-154-253.ngrok-free.app"
+	WebhookURL = "https://df4b-178-207-154-253.ngrok-free.app"
 )
 
 var (
@@ -31,26 +30,26 @@ func startListening(bot *tgbotapi.BotAPI) {
 }
 
 func handleMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	command := strings.ToLower(update.Message.Text)
-	if command == "/help" {
-		var availableCommands strings.Builder
-		availableCommands.WriteString("Available commands:\n")
+	key := strings.ToLower(update.Message.Text)
+	if key == "/help" {
+		var avCommands strings.Builder
+		avCommands.WriteString("Available commands:\n")
 		messageMapMutex.RLock()
 		defer messageMapMutex.RUnlock()
 
 		for cmd := range messageMap {
-			availableCommands.WriteString(cmd)
-			availableCommands.WriteString("\n")
+			avCommands.WriteString(cmd)
+			avCommands.WriteString("\n")
 		}
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, availableCommands.String())
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, avCommands.String())
 		bot.Send(msg)
 	} else {
 		messageMapMutex.RLock()
-		response, ok := messageMap[command]
+		answer, ok := messageMap[key]
 		messageMapMutex.RUnlock()
 
 		if ok {
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, response)
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, answer)
 			bot.Send(msg)
 		} else {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Command not found")
@@ -102,7 +101,6 @@ func start(commands []struct{ Command, Response string }) {
 }
 
 func main() {
-
 	commands := []struct {
 		Command, Response string
 	}{
