@@ -5,18 +5,13 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"sync"
 
 	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 const (
 	BotToken   = "7145361114:AAGcDmLWHv9eyeQTjcj1djRA1oDcCJBmuKg"
-	WebhookURL = "https://df4b-178-207-154-253.ngrok-free.app"
-)
-
-var (
-	messageMapMutex sync.RWMutex
+	WebhookURL = "https://e1e4-178-207-154-253.ngrok-free.app"
 )
 
 func startListening(bot *tgbotapi.BotAPI) {
@@ -34,8 +29,6 @@ func handleMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	if key == "/help" {
 		var avCommands strings.Builder
 		avCommands.WriteString("Available commands:\n")
-		messageMapMutex.RLock()
-		defer messageMapMutex.RUnlock()
 
 		for cmd := range messageMap {
 			avCommands.WriteString(cmd)
@@ -44,9 +37,7 @@ func handleMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, avCommands.String())
 		bot.Send(msg)
 	} else {
-		messageMapMutex.RLock()
 		answer, ok := messageMap[key]
-		messageMapMutex.RUnlock()
 
 		if ok {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, answer)
@@ -58,9 +49,7 @@ func handleMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	}
 }
 
-var (
-	messageMap = make(map[string]string)
-)
+var messageMap = make(map[string]string)
 
 func initializeBot() (*tgbotapi.BotAPI, error) {
 	bot, err := tgbotapi.NewBotAPI(BotToken)
