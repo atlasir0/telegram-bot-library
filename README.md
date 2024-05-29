@@ -1,2 +1,7 @@
 # telegram-bot-library
-implementation of a library for creating bot telegrams
+
+### О проекте 
+
+Сделал небольшого телеграм бота, который принимает на вход структуру с командами и добавляет их.
+
+Скомпилировать и запустить можно вручную, используя `go run main.go`:
